@@ -1,41 +1,38 @@
 #include <iostream>
-#include <cstddef>
-
-#include "EqualSequence.hpp"
-#include "MonotonicIncreasing.hpp"
+#include <vector>
+#include "fernando.h"
 
 int main()
 {
-  int num = 0;
-  alberto::EqualSequence count_equal;
-  alberto::MonotonicIncreasing count_monotonic;
-  std::size_t element_count = 0;
-
-  while (std::cin >> num && num != 0)
-  {
-    if (std::cin.fail() && !std::cin.eof())
+    std::vector<int> sequence;
+    int value;
+    
+    // Ler sequência até encontrar 0
+    while (std::cin >> value && value != 0)
     {
-      std::cerr << "Error: invalid input." << "\n";
-      return 1;
+        sequence.push_back(value);
     }
-
-    count_equal(num);
-    count_monotonic(num);
-    ++element_count;
-  }
-
-  if (std::cin.fail() && !std::cin.eof())
-  {
-    std::cerr << "Error: invalid input." << "\n";
-    return 1;
-  }
-
-  if (element_count == 0)
-  {
-    std::cout << 0 << "\n" << 0 << "\n";
+    
+    // Verificar entrada inválida
+    if (std::cin.fail())
+    {
+        std::cerr << "Error: invalid input" << std::endl;
+        return 1;
+    }
+    
+    // Verificar sequência muito curta
+    if (sequence.empty())
+    {
+        std::cerr << "Error: sequence too short" << std::endl;
+        return 2;
+    }
+    
+    // Calcular e exibir resultados
+    size_t eqlSeq = fernando::maxEqualSequence(sequence.data(), sequence.size());
+    size_t monInc = fernando::maxIncreasingFragment(sequence.data(), sequence.size());
+    
+    std::cout << eqlSeq << std::endl;
+    std::cout << monInc << std::endl;
+    
     return 0;
-  }
-
-  std::cout << count_equal() << "\n" << count_monotonic() << "\n";
-  return 0;
 }
